@@ -10,12 +10,12 @@ The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the giv
 The values are assigned to the input port using
 
 '''
-    s = 13
-    i12 = 0b10
-    i13 = 0b11
-    dut.sel.value = s
-    dut.inp12.value = i12
-    dut.inp13.value = i13
+      s = 13
+      i12 = 0b10
+      i13 = 0b11
+      dut.sel.value = s
+      dut.inp12.value = i12
+      dut.inp13.value = i13
 '''
 
 
