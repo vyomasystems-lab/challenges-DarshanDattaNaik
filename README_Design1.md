@@ -122,13 +122,14 @@ begin
 ```
 
 BUG1: For out=inp12 the sel=5'b01100
+
 BUG2: For sel=5'b11110 the output should be assigned i.e out=inp30
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.
 ![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/Design1_passed_test.png)
 
-The updated desigfn is checked in as mux_fix.v
+The updated design is checked in as mux_fix.v
 
 # Verification strategy
 
