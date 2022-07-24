@@ -24,13 +24,20 @@ The assert statement is used for comparing the adder's outut to the expected val
 The following error is seen:
 
 ```
-
+ assert dut.out.value == i13, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
+                     AssertionError: Randomised test failed with: inp13=11, sel=01101 with obtained output=10 not equal expected output=11
 ```
 
 - Test Inputs: sel=01101  inp12=10  inp13=11
 - Expected Output: out=11
 - Observed Output in the DUT dut.out=10
 
+# Test Scenarion 2
+
+```
+                         assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
+                     AssertionError: Randomised test failed with: inp12=10, sel=01100 with obtained output=00 not equal expected output=10
+```
 
 
 
