@@ -8,18 +8,40 @@ The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the giv
 
 # Test Scenario 1
 
+The following values are assigned to the input port 
+
+```
+    s = 0b01100
+    i = 0b10
+    dut.sel.value = s
+    dut.inp12.value = i
+```
+
+The following error is seen:
+
+```
+                         assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
+                     AssertionError: Randomised test failed with: inp12=10, sel=01100 with obtained output=00 not equal expected output=10
+```
+
+- Test Inputs: 'sel=01100'  'inp12=10'  
+- Expected Output: out=10
+- Observed Output in the DUT dut.out=00
+
+'Zero' is obtained as output instead of 'inp12' as output indicating bug in the design
+
+# Test Scenario 2
+
 The values are assigned to the input ports using
 
 ```
-      s = 01101
+      s = 0b01101
       i12 = 0b10
       i13 = 0b11
       dut.sel.value = s
       dut.inp12.value = i12
       dut.inp13.value = i13
 ```
-
-The assert statement is used for comparing the adder's outut to the expected value.
 
 The following error is seen:
 
@@ -28,16 +50,36 @@ The following error is seen:
                      AssertionError: Randomised test failed with: inp13=11, sel=01101 with obtained output=10 not equal expected output=11
 ```
 
-- Test Inputs: sel=01101  inp12=10  inp13=11
+- Test Inputs: 'sel=01101'  'inp12=10'  'inp13=11'
 - Expected Output: out=11
 - Observed Output in the DUT dut.out=10
 
-# Test Scenarion 2
+'inp12' is obtained as output instead of obtaining 'inp13' as output indicating a bug in the design
+
+# Test Scenario 3
+
+The following values are assigned to the input port 
 
 ```
-                         assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
-                     AssertionError: Randomised test failed with: inp12=10, sel=01100 with obtained output=00 not equal expected output=10
+    s = 30
+    i= 0b11
+    dut.sel.value = s
+    dut.inp30.value = i
+    await Timer(2, units='ns')
 ```
+
+The following error is seen:
+
+```
+assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
+                     AssertionError: Randomised test failed with: inp30=11, sel=11110 with obtained output=00 not equal expected output=11
+```
+
+- Test Inputs: 'sel=11110'  'inp30=11'  
+- Expected Output: out=11
+- Observed Output in the DUT dut.out=00
+
+'Zero' is obtained as output instead of 'inp30' as output indicating bug in the design
 
 
 
