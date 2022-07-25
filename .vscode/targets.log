@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 24 18:25:48 2022
+# Make data base, printed on Mon Jul 25 13:22:35 2022
 
 # Variables
 
@@ -75,7 +77,7 @@ PATH = /ide/bin/remote-cli:/home/gitpod/.nix-profile/bin:/workspace/.cargo/bin:/
 # environment
 GITPOD_OWNER_ID = fefdd00f-bac6-452c-b48b-56616bbfe71f
 # environment
-GITPOD_WORKSPACE_ID = vyomasystem-challengesd-k9gx8kg7yt9
+GITPOD_WORKSPACE_ID = vyomasystem-challengesd-9ahq1o9ovep
 # environment
 GITPOD_INTERVAL = 30000
 # environment
@@ -101,7 +103,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 PYENV_ROOT = /home/gitpod/.pyenv
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-4be7ae00-f692-469e-bbfb-06bdda6d94b3.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-bfccc4f4-f78d-4760-89f9-13c59c5cd7c7.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -143,7 +145,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
-GITPOD_CLI_APITOKEN = UCYcrzMJG8WEE4lU5fmO1-0Hohf95ywj
+GITPOD_CLI_APITOKEN = _HgrAtTBR-RDgFezJiX3YTv4dlv6rvMl
 # automatic
 +F = $(notdir $+)
 # environment
@@ -151,7 +153,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-HOSTNAME = vyomasystem-challengesd-k9gx8kg7yt9
+HOSTNAME = vyomasystem-challengesd-9ahq1o9ovep
 # environment
 GP_PYENV_INIT = true
 # environment
@@ -255,7 +257,7 @@ PWD = /workspace/challenges-DarshanDattaNaik
 # environment
 LC_ALL = C
 # environment
-GITPOD_WORKSPACE_CONTEXT = {"isFile":false,"path":"","title":"vyomasystems-lab/challenges-DarshanDattaNaik - master","ref":"master","refType":"branch","revision":"da92d332a7af31952f6e589c4262998bee8b9593","repository":{"cloneUrl":"https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik.git","host":"github.com","name":"challenges-DarshanDattaNaik","owner":"vyomasystems-lab","private":true},"normalizedContextURL":"https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik","checkoutLocation":"challenges-DarshanDattaNaik"}
+GITPOD_WORKSPACE_CONTEXT = {"isFile":false,"path":"","title":"vyomasystems-lab/challenges-DarshanDattaNaik - master","ref":"master","refType":"branch","revision":"224fe002acffc1610612b7bca59447d952f90b7a","repository":{"cloneUrl":"https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik.git","host":"github.com","name":"challenges-DarshanDattaNaik","owner":"vyomasystems-lab","private":true},"normalizedContextURL":"https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik","checkoutLocation":"challenges-DarshanDattaNaik"}
 # environment
 JAVA_TOOL_OPTIONS =  -Xmx3435m
 # automatic
@@ -267,6 +269,7 @@ SUFFIXES :=
 # environment
 APACHE_DOCROOT_IN_REPO = public
 # environment
+ 
 PYENV_VIRTUALENV_INIT = 1
 # environment
 NGINX_DOCROOT_IN_REPO = public
@@ -275,9 +278,9 @@ NGINX_DOCROOT_IN_REPO = public
 # environment
 rvm_loaded_flag = 1
 # environment
-GITPOD_INSTANCE_ID = adae8ab0-ae11-4a3e-a075-fa555ab758ea
+GITPOD_INSTANCE_ID = 07d047d1-721c-4c0f-bbcb-0ae632d86529
 # environment
-GITPOD_WORKSPACE_URL = https://vyomasystem-challengesd-k9gx8kg7yt9.ws-us54.gitpod.io
+GITPOD_WORKSPACE_URL = https://vyomasystem-challengesd-9ahq1o9ovep.ws-us54.gitpod.io
 # default
 .RECIPEPREFIX := 
 # environment
@@ -293,9 +296,9 @@ MY_RUBY_HOME = /home/gitpod/.rvm/rubies/ruby-2.7.6
 
 # Directories
 
-# . (device 2346, inode 4026693550): 15 files, no impossibilities.
+# . (device 2346, inode 3893390707): 16 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -345,14 +348,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 258 B / avg = 11 B
-# current buf: size = 8162 B / used = 258 B / count = 23 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 282 B / avg = 11 B
+# current buf: size = 8162 B / used = 282 B / count = 24 / avg = 11 B
 
-# strcache performance: lookups = 26 / hit rate = 11%
+# strcache performance: lookups = 27 / hit rate = 11%
 # hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Sun Jul 24 18:25:48 2022
+# Load=24/8192=0%, Rehash=0, Collisions=1/27=4%
+# Finished Make data base on Mon Jul 25 13:22:35 2022
 
  
-make: *** No rule to make target 'all'.  Stop.
-
