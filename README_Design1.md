@@ -101,7 +101,7 @@ begin
       5'b01010: out = inp10;
       5'b01011: out = inp11;
       5'b01101: out = inp12;             ========> BUG1
-      5'b01101: out = inp13;
+      5'b01101: out = inp13;             ========> BUG2
       5'b01110: out = inp14;
       5'b01111: out = inp15;
       5'b10000: out = inp16;
@@ -117,13 +117,15 @@ begin
       5'b11010: out = inp26;
       5'b11011: out = inp27;
       5'b11100: out = inp28;
-      5'b11101: out = inp29;             ======> BUG2
+      5'b11101: out = inp29;             ======> BUG3
       default: out = 0;
 ```
 
-BUG1: For out=inp12 the sel=5'b01100
+BUG1: output for testcase sel=5'b01100 is not defined 
 
-BUG2: For sel=5'b11110 the output should be assigned i.e out=inp30
+BUG2: two different inputs are selected as output for same sel=5'b01101
+
+BUG3: output for testcase sel=5'b11110 is not defined
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.
