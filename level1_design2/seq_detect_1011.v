@@ -66,7 +66,7 @@ module seq_detect_1011(seq_seen, inp_bit, reset, clk);
       end
       SEQ_1011:
       begin
-        next_state = IDLE;
+        next_state = IDLE;  //error it should be if inp=1 ==> seq1 if zero if inp=0 ==> seq10
       end
     endcase
   end
