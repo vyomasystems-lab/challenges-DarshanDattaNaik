@@ -59,9 +59,10 @@ async def test_seq_bug2(dut):
     await FallingEdge(dut.clk)
     dut.inp_bit.value= 0
     await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
+    '''dut.inp_bit.value= 1
     await FallingEdge(dut.clk)
     dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    cocotb.log.info(f'current state={int(dut.current_state.value)} seq_seen={dut.seq_seen.value} model current state={4} model seq_seen={1}')
-    assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
+    await FallingEdge(dut.clk)'''
+    assert dut.current_state.value==0,"current state {A}".format(A=int(current_state.value))
+    #cocotb.log.info(f'current state={int(dut.current_state.value)} seq_seen={dut.seq_seen.value} model current state={4} model seq_seen={1}')
+    #assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
