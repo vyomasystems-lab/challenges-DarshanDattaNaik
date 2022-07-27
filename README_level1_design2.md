@@ -4,24 +4,54 @@ The verification environment is setup using [Vyoma's UpTickPro](https://vyomasys
 ![Gitpod Id verification](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/initial%20tool.png)
 
 ## Verification Environment
-The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given Sequence detector design. The environment contains test cases which exposes the bugs in the design.The test drives inputs to the Design Under Test (seq module here) which takes in 5-bit input 'sel', 31 2-bit inputs 'inp0' to 'inp30' and gives 1-bit output 'out' based on the 'sel' input.
+The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given Sequence detector design. The environment contains test cases which exposes the bugs in the design.The test drives input sequence to the Design Under Test (seq_detect_1011 module here) which takes a one bit input 'input_bit' in each clock cycle and moves to different states based on the inputs detected. The test detects whether the 'output_seen' and the 'current_state' values match expected values for a given input sequence
+
+The following required libraries are imported for developing the environment
+```
+import os
+import random
+from pathlib import Path
+
+import cocotb
+from cocotb.clock import Clock
+from cocotb.triggers import RisingEdge, FallingEdge
+```
+
+The clock is generated and the sequence detector is reset initially while testing each test case by using following code 
+```
+ clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
+    cocotb.start_soon(clock.start())        # Start the clock
+
+    # reset
+    dut.reset.value = 1
+    await FallingEdge(dut.clk)  
+    dut.reset.value = 0
+    await FallingEdge(dut.clk)
+
+```
 
 # Test Scenario 1
 
-The following values are assigned to the input port 
+The sequence 11011 is fed as input to the detector using the below code
 
 ```
-    s = 0b01100
-    i = 0b10
-    dut.sel.value = s
-    dut.inp12.value = i
+     #sequence-11011 
+    dut.inp_bit.value= 1
+    await FallingEdge(dut.clk)
+    dut.inp_bit.value= 1
+    await FallingEdge(dut.clk)
+    dut.inp_bit.value= 0
+    await FallingEdge(dut.clk)
+    dut.inp_bit.value= 1
+    await FallingEdge(dut.clk)
+    dut.inp_bit.value= 1
+    await FallingEdge(dut.clk)
 ```
 
 The following error is seen:
 
 ```
-                         assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
-                     AssertionError: Randomised test failed with: inp12=10, sel=01100 with obtained output=00 not equal expected output=10
+
 ```
 
 - Test Inputs: 'sel=01100'  'inp12=10'  
