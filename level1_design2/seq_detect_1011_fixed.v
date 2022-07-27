@@ -67,7 +67,7 @@ module seq_detect_1011_fixed(seq_seen, inp_bit, reset, clk);
         if(inp_bit == 1)
           next_state = SEQ_1;
         else
-          next_state = SEQ_10; //error it should be if inp=1 ==> seq1 if zero if inp=0 ==> seq10
+          next_state = SEQ_10; 
       end
     endcase
   end
