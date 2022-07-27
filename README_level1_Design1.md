@@ -129,7 +129,7 @@ BUG3: output for testcase sel=5'b11110 is not defined
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.
-![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/Design1_passed_test.png)
+![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/level1_design1/Design1_passed_test.png)
 
 The updated design is checked in as mux_fix.v
 
