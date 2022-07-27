@@ -9,7 +9,7 @@ from pathlib import Path
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge
-'''
+
 @cocotb.test()
 async def test_seq_bug1(dut):
     """Test for seq detection """
@@ -67,7 +67,7 @@ async def test_seq_bug2(dut):
     await FallingEdge(dut.clk)
     cocotb.log.info(f'current state={int(dut.current_state.value)} seq_seen={dut.seq_seen.value} model current state={4} model seq_seen={1}')
     assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
-'''
+
 @cocotb.test()
 async def test_seq_bug3(dut):
     """Test for seq detection """

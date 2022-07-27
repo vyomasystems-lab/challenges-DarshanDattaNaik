@@ -4,10 +4,10 @@ TOPLEVEL_LANG ?= verilog
 
 PWD=$(shell pwd)
 
-VERILOG_SOURCES = $(PWD)/               # provide your design path
+VERILOG_SOURCES = $(PWD)/vedic8x8.v               # provide your design path
 
-TOPLEVEL :=           # design file
-MODULE   :=     # test file
+TOPLEVEL :=  vedic8x8         # design file
+MODULE   :=  test_vedic8x8   # test file
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
