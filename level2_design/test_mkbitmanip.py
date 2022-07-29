@@ -34,11 +34,11 @@ def run_test(dut):
 
     ######### CTB : Modify the test to expose the bug #############
     # input transaction
-    for i in range((2^32)-1):
+    for i in range((2**32)-1):
         mav_putvalue_src1 = i
-        for j in range((2^32)-1):
+        for j in range((2**32)-1):
             mav_putvalue_src2 = j
-            for k in range((2^32)-1):
+            for k in range((2**32)-1):
                mav_putvalue_src3 = k
                mav_putvalue_instr = 0x40007033
 
