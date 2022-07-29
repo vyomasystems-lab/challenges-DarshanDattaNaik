@@ -188,7 +188,7 @@ The updated design is checked in as seq_detect_1011_fixed.v
 The verification strategy used here is understanding flow using state diagram of the given buggy design and comparing with the actual flow(state diagram) of the required sequence detector.
 
 # Is the verification complete?
-Yes, The verification is complete and the design is fixed
+Yes, The verification is complete and the design is fixed 
 
 
 
