@@ -134,8 +134,14 @@ Updating the design and re-running the test makes the test pass.
 The updated design is checked in as mux_fix.v
 
 # Verification strategy
+The verification startegy used here is based on
+i) only one input should be selected for one unique combination of 'sel'
+ii) verifying the output for all different possible combinations of 'sel'
+
 
 # Is the verification complete?
+Yes, the verification is complete and the design is fixed
+Note: When sel=5'b11111 the ouput would be set to default zero (This value of sel can be used to reset the mux output)
 
 
 
