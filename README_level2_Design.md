@@ -241,7 +241,7 @@ The following error is seen:
 The error indicates a bug in the SLL+ logic of the DUT
 
 # Verification strategy
-The strategy used is generating different possible values for required inputs using 'for loop' for a particular instruction set and checking the functionality of each operations to obtain combination of inputs which fail the design.
+The strategy used is generating different possible values for required inputs using 'for loop' for a particular instruction set and comparing the obtained result with the expected result from model_mkbitmanip.py to obtain combination of inputs which fail the particular operation in the design.The same is repeated for different operations.
 
 # Is the verification complete?
 No the verification is not complete as the number of testcases that can be generated is very high there is a possibilty of presence of unnoticed bugs in the design
