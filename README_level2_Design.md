@@ -43,100 +43,124 @@ def clock_gen(signal):
 
 # Test Scenario 1
 
-The 
+Test for AND+ operation 
 
 ```
-     #sequence-11011 
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 0
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
+    for j in range(1000):
+       mav_putvalue_src1 = 0x10
+       mav_putvalue_src2 = j
+       mav_putvalue_src3 = 0x0
+       mav_putvalue_instr = 0x00007033                #instruction for AND+ opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
 ```
 
 The following error is seen:
 
 ```
-assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
-                     AssertionError: The sequnce was not detected with current state=0 and seq_seen=0 expected current_state=4 and seq_seen=1
+ assert dut_output == expected_mav_putvalue, error_message
+                     AssertionError: Value mismatch DUT = 0x20 does not match MODEL = 0x0 with src1= 0x10  src2= 0x1  src3= 0x0
 ```
 
-- Test Inputs: 'input sequence=11011'  
-- Expected Output: 'current_state = 4' 'seq_seen=1'
-- Observed Output in the DUT : 'current state=0' 'seq_seen=0'
+- Test Inputs: 'src1= 0x10'  'src2= 0x1'  'src3= 0x0' 'mav_putvalue_instr = 0x00007033'
+- Expected Output: 'MODEL = 0x0'
+- Observed Output in the DUT : 'DUT = 0x20'
 
-The sequence is not detected indicating bug in the design
+The error indicates a bug in the AND+ logic of the DUT
 
 # Test Scenario 2
-
-The sequence 1011011 is fed as input to the detector using the below code
+Test for OR+ operation 
 
 ```
-#sequence-1011011
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 0
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 0
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
+    for j in range(1000):
+       mav_putvalue_src1 = 0xabcdabcd
+       mav_putvalue_src2 = j
+       mav_putvalue_src3 = 0x0
+       mav_putvalue_instr = 0x00006033                #instruction for OR+ opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
+
 ```
 
 The following error is seen:
 
 ```
- assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
-                     AssertionError: The sequnce was not detected with current state=0 and seq_seen=0 expected current_state=4 and seq_seen=1
+ assert dut_output == expected_mav_putvalue, error_message
+                     AssertionError: Value mismatch DUT = 0x1579b579a does not match MODEL = 0x0 with src1= 0xabcdabcd  src2= 0x1  src3= 0x0
 ```
-- Test Inputs: 'input sequence=1011011'  
-- Expected Output: 'current_state = 4' 'seq_seen=1'
-- Observed Output in the DUT : 'current state=0' 'seq_seen=0'
 
-The sequence is not detected indicating bug in the design
+- Test Inputs: 'src1= 0xabcdabcd'  'src2= 0x1'  'src3= 0x0' 'mav_putvalue_instr = 0x00006033'
+- Expected Output: 'MODEL = 0x0'
+- Observed Output in the DUT :  'DUT = 0x1579b579a'
+
+The error indicates a bug in the OR+ logic of the DUT
 
 # Test Scenario 3
-
-The sequence 101011 is fed as input to the detector using the below code
+Test for XOR+ operation 
 
 ```
-#sequence-101011
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 0
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 0
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
-    dut.inp_bit.value= 1
-    await FallingEdge(dut.clk)
+for j in range(1000):
+       mav_putvalue_src1 = 0xffff
+       mav_putvalue_src2 = j
+       mav_putvalue_src3 = 0x10
+       mav_putvalue_instr = 0x00004033                #instruction for XOR+ opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
+
 ```
 
 The following error is seen:
 
 ```
-assert dut.seq_seen.value == 1,"The sequnce was not detected with current state={A} and seq_seen={B} expected current_state={C} and seq_seen={D}".format(A=int(dut.current_state.value),B=dut.seq_seen.value,C=4,D=0b1)
-                     AssertionError: The sequnce was not detected with current state=0 and seq_seen=0 expected current_state=4 and seq_seen=1
+ assert dut_output == expected_mav_putvalue, error_message
+                     AssertionError: Value mismatch DUT = 0x20 does not match MODEL = 0x0 with src1= 0xffff  src2= 0x0  src3= 0x10
 ```
-- Test Inputs: 'input sequence=101011'  
-- Expected Output: 'current_state = 4' 'seq_seen=1'
-- Observed Output in the DUT : 'current state=0' 'seq_seen=0'
 
-The sequence is not detected indicating bug in the design
+- Test Inputs: 'src1= 0xffff'  'src2= 0x0'  'src3= 0x10' 'mav_putvalue_instr = 0x00004033'
+- Expected Output: 'MODEL = 0x0'
+- Observed Output in the DUT :  ' DUT = 0x20 '
+
+The error indicates a bug in the XOR+ logic of the DUT
+
 
 # Verification strategy
 The strategy used is generating all possible values for required inputs using 'for loops' for a particular instruction set and checking the functionality to obtain combination of inputs which fail the design.
