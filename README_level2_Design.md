@@ -201,6 +201,44 @@ assert dut_output == expected_mav_putvalue, error_message
 
 The error indicates a bug in the ANDN logic of the DUT
 
+# Test Scenario 5
+Test for SLL+ operation 
+
+```
+for j in range(0,1000):
+       mav_putvalue_src1 = j
+       mav_putvalue_src2 = 0x10101010
+       mav_putvalue_src3 = 0x01010101
+       mav_putvalue_instr = 0x00001033                #instruction for SLL+ opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
+```
+
+The following error is seen:
+
+```
+ assert dut_output == expected_mav_putvalue, error_message
+                     AssertionError: Value mismatch DUT = 0x2 does not match MODEL = 0x0 with src1= 0x1  src2= 0x10101010  src3= 0x1010101
+```
+
+- Test Inputs: 'src1= 0x1'  'src2= 0x10101010'  'src3= 0x1010101' 'mav_putvalue_instr = 0x00001033'
+- Expected Output: 'MODEL = 0x0'
+- Observed Output in the DUT :  ' DUT = 0x2 '
+
+The error indicates a bug in the SLL+ logic of the DUT
 
 # Verification strategy
 The strategy used is generating all possible values for required inputs using 'for loops' for a particular instruction set and checking the functionality to obtain combination of inputs which fail the design.
