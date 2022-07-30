@@ -150,3 +150,47 @@ def run_test_XOR(dut):
        # comparison
        error_message = f'Value mismatch DUT = {hex(dut_output)} does not match MODEL = {hex(expected_mav_putvalue)} with src1= {hex(dut.mav_putvalue_src1.value)}  src2= {hex(dut.mav_putvalue_src2.value)}  src3= {hex(dut.mav_putvalue_src3.value)}'
        assert dut_output == expected_mav_putvalue, error_message
+
+
+#ANDN Test
+@cocotb.test()
+def run_test_ANDN(dut):
+
+    # clock
+    cocotb.fork(clock_gen(dut.CLK))
+
+    # reset
+    dut.RST_N.value <= 0
+    yield Timer(10) 
+    dut.RST_N.value <= 1
+
+
+    #for i in range((2**32)-1):
+    
+    for j in range(1,1000):
+       mav_putvalue_src1 = 0xaaaa
+       mav_putvalue_src2 = j
+       mav_putvalue_src3 = 0x101
+       mav_putvalue_instr = 0x40007033                #instruction for ANDN opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
+
+       cocotb.log.info(f'DUT OUTPUT={hex(dut_output)}')
+       cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue)}')
+    
+       # comparison
+       error_message = f'Value mismatch DUT = {hex(dut_output)} does not match MODEL = {hex(expected_mav_putvalue)} with src1= {hex(dut.mav_putvalue_src1.value)}  src2= {hex(dut.mav_putvalue_src2.value)}  src3= {hex(dut.mav_putvalue_src3.value)}'
+       assert dut_output == expected_mav_putvalue, error_message

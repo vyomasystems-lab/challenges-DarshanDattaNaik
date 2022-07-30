@@ -161,6 +161,46 @@ The following error is seen:
 
 The error indicates a bug in the XOR+ logic of the DUT
 
+# Test Scenario 4
+Test for ANDN operation 
+
+```
+for j in range(1,1000):
+       mav_putvalue_src1 = 0xaaaa
+       mav_putvalue_src2 = j
+       mav_putvalue_src3 = 0x101
+       mav_putvalue_instr = 0x40007033                #instruction for ANDN opeartion 
+
+       # expected output from the model
+       expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
+
+       # driving the input transaction
+       dut.mav_putvalue_src1.value = mav_putvalue_src1
+       dut.mav_putvalue_src2.value = mav_putvalue_src2
+       dut.mav_putvalue_src3.value = mav_putvalue_src3
+       dut.EN_mav_putvalue.value = 1
+       dut.mav_putvalue_instr.value = mav_putvalue_instr
+  
+       yield Timer(1) 
+
+       # obtaining the output
+       dut_output = dut.mav_putvalue.value
+
+```
+
+The following error is seen:
+
+```
+assert dut_output == expected_mav_putvalue, error_message
+                     AssertionError: Value mismatch DUT = 0x1 does not match MODEL = 0x15555 with src1= 0xaaaa  src2= 0x1  src3= 0x101
+```
+
+- Test Inputs: 'src1= 0xaaaa'  'src2= 0x1'  'src3= 0x101' 'mav_putvalue_instr = 0x40007033'
+- Expected Output: 'MODEL = 0x15555'
+- Observed Output in the DUT :  ' DUT = 0x1 '
+
+The error indicates a bug in the ANDN logic of the DUT
+
 
 # Verification strategy
 The strategy used is generating all possible values for required inputs using 'for loops' for a particular instruction set and checking the functionality to obtain combination of inputs which fail the design.
