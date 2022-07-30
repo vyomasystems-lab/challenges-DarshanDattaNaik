@@ -367,3 +367,4 @@ def run_test_SRL(dut):
        # comparison
        error_message = f'Value mismatch DUT = {hex(dut_output)} does not match MODEL = {hex(expected_mav_putvalue)} with src1= {hex(dut.mav_putvalue_src1.value)}  src2= {hex(dut.mav_putvalue_src2.value)}  src3= {hex(dut.mav_putvalue_src3.value)}'
        assert dut_output == expected_mav_putvalue, error_message
+
