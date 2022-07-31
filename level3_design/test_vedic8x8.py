@@ -7,6 +7,8 @@ def btd(val):
 def dtb(val):
     return bin(val)
 
+
+
 @cocotb.test()
 async def test_multiplier(dut):
     """Test for multiplication"""
@@ -21,26 +23,33 @@ async def test_multiplier(dut):
        assert dut.p.value == A*B, "Randomised test failed with: a={A} and a={B} and product p!={P}"#.format(
        #A=s, B=dut.inp12.value, S=dut.sel.value,M=dut.out.value,E=dut.inp12.value)      
 
+
+
+# TEST FOR ALL VEDIC4x4 MODULES in VEDIC8x8
+
 @cocotb.test()
 async def test_multiplier1(dut):
+    #Test for Vedic_4x4_A module
     """Test for a[3:0]*b[3:0} """
     
-    A = 0x0f
-    B = 0x0f
+    A = 0xff
+    B = 0xff
     dut.a.value = A
     dut.b.value = B
+    c=btd(dtb(A)[-4:])*btd(dtb(B)[-4:])
     await Timer(2, units='ns')
     
-    dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.m.value)}')
-    assert dut.m.value == A*B , "Randomised test failed with: a={A} and b={B} and  m={P} not equal to expected value m={Q}".format(
-    A=dut.a.value, B=dut.b.value, Q=A*B,P=dut.m.value)      
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.m.value)}')
+    assert dut.m.value == c , "Randomised test failed with: a={A} and b={B} and  m={P} not equal to expected value m={Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut.m.value)      
 
 @cocotb.test()
 async def test_multiplier2(dut):
+    #Test for Vedic_4x4_B module
     """Test for a[7:4]*b[3:0} """
     
-    A = 0xf0
-    B = 0x0f
+    A = 0xab
+    B = 0xab
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(A)[2:6])*btd(dtb(B)[-4:])
@@ -52,6 +61,7 @@ async def test_multiplier2(dut):
 
 @cocotb.test()
 async def test_multiplier3(dut):
+    #Test for Vedic_4x4_C module
     """Test for a[3:0]*b[7:4] """
     
     A = 0x0f
@@ -67,6 +77,7 @@ async def test_multiplier3(dut):
 
 @cocotb.test()
 async def test_multiplier4(dut):
+    #Test for Vedic_4x4_D module
     """Test for a[7:4]*b[7:4] """
     
     A = 0xf0
@@ -80,10 +91,14 @@ async def test_multiplier4(dut):
     assert dut.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
     A=dut.a.value, B=dut.b.value, Q=c,P=dut.q.value)
 
-# TEST FOR ALL VEDIC4x4 MODULES
+#IF ALL FAILED INDICATES BUGG IN vedic4x4 main module
+
+
+# TEST FOR ALL VEDIC2x2 MODULES in VEDIC4X4_A
 
 @cocotb.test()
 async def test_multiplier1_1(dut):
+    #Test for Vedic_2x2_A module
     """Test for a[1:0]*b[1:0] """
     
     A = 0b00000011
@@ -100,15 +115,69 @@ async def test_multiplier1_1(dut):
 
 @cocotb.test()
 async def test_multiplier1_2(dut):
-    """Test for a[1:0]*b[1:0] """
+    #Test for Vedic_2x2_B module
+    """Test for a[3:2]*b[1:0] """
     
     A = 0b00001100
     B = 0b00000011
     dut.a.value = A
     dut.b.value = B
-    c=btd(dtb(A)[6:8])*btd(dtb(B)[-2:])
+    c=btd(dtb(A)[-4:-2])*btd(dtb(B)[-2:])
     await Timer(2, units='ns')
     
-    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.m.value)}')
-    assert dut.A.m.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
-    A=dut.a.value, B=dut.b.value, Q=c,P=dut.A.m.value)
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.n.value)}')
+    assert dut.A.n.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut.A.n.value)
+
+@cocotb.test()
+async def test_multiplier1_3(dut):
+    #Test for Vedic_2x2_C module
+    """Test for a[1:0]*b[3:2] """
+    
+    A = 0b00000011
+    B = 0b00001100
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-2:])
+    await Timer(2, units='ns')
+    
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.o.value)}')
+    assert dut.A.o.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut.A.o.value)
+
+@cocotb.test()
+async def test_multiplier1_4(dut):
+    #Test for Vedic_2x2_D module
+    """Test for a[3:2]*b[3:2] """
+    
+    A = 0b00001100
+    B = 0b00001100
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-4:-2])
+    await Timer(2, units='ns')
+    
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.q.value)}')
+    assert dut.A.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut.A.q.value)
+
+#IF ALL TESTS FAIL INDICATES BUGG IN INDIVIDUAL VEDIC2X2 MODULE
+
+# TEST FOR INDIVIDUAL VEDIC2X2 
+@cocotb.test()
+async def test_multiplier1_1_1(dut):
+    """Test for a[1:0]*b[1:0] """
+    
+    A = 0b00000011
+    B = 0b00000011
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
+    await Timer(2, units='ns')
+    
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.A.p.value)}')
+    assert dut.A.A.p.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut.A.A.p.value)
+
+
+
