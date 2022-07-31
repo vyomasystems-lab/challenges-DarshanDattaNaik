@@ -263,72 +263,51 @@ The following error is seen:
 
 Failed test indicates presence of bug in Vedic2x2_D module
 
-# Test Scenario 9
+# Test Scenario 10
 
 Test for Vedic2x2_basic module present in Vedic4x4_A module
 
 ```
- 
+    A = 2
+    B = 3
+    dut.A.A.a.value = A
+    dut.A.A.b.value = B
+    assert dut.A.A.p.value == A*B , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.A.A.a.value, B=dut.A.A.b.value, Q=A*B,P=int(dut.A.A.p.value))
 ```
 
 The following error is seen:
 
 ```
- assert dut.A.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
-                     AssertionError: Randomised test failed with: a=10101010 and b=10111111 and  DUT=7 not equal to expected output 6
+  assert dut.A.A.p.value == A*B , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=10 and b=11 and  DUT=7 not equal to expected output 6
 ```
 
-- Test Inputs: 'a=10101010' 'b=10111111'
-- Expected Output: q=6
+- Test Inputs: 'a=0b10' 'b=0b11'
+- Expected Output: p=6
 - Observed Output in the DUT: DUT=7
 
-Failed test indicates presence of bug in Vedic2x2_D module
+Failed test indicates presence of bug in lower Vedic2x2 module 
 
 # Design Bug
 
 Based on the above test input and analysing the design, we see the following
 
 ```
-begin
-    case(sel)
-      5'b00000: out = inp0;  
-      5'b00001: out = inp1;  
-      5'b00010: out = inp2;  
-      5'b00011: out = inp3;  
-      5'b00100: out = inp4;  
-      5'b00101: out = inp5;  
-      5'b00110: out = inp6;  
-      5'b00111: out = inp7;  
-      5'b01000: out = inp8;  
-      5'b01001: out = inp9;  
-      5'b01010: out = inp10;
-      5'b01011: out = inp11;
-      5'b01101: out = inp12;             ========> BUG1
-      5'b01101: out = inp13;             ========> BUG2
-      5'b01110: out = inp14;
-      5'b01111: out = inp15;
-      5'b10000: out = inp16;
-      5'b10001: out = inp17;
-      5'b10010: out = inp18;
-      5'b10011: out = inp19;
-      5'b10100: out = inp20;
-      5'b10101: out = inp21;
-      5'b10110: out = inp22;
-      5'b10111: out = inp23;
-      5'b11000: out = inp24;
-      5'b11001: out = inp25;
-      5'b11010: out = inp26;
-      5'b11011: out = inp27;
-      5'b11100: out = inp28;
-      5'b11101: out = inp29;             ======> BUG3
-      default: out = 0;
+module vedic2x2(a,b,p);
+input [1:0] a,b;
+output [3:0] p;
+wire [3:0] w;
+assign p[0]= a[1]&b[0];             ===> BUG
+assign w[0]=a[1]&b[0];
+assign w[1]=a[0]&b[1];
+assign w[2]=a[1]&b[1];
+half_adder A(w[0],w[1],p[1],w[3]);
+half_adder B(w[2],w[3],p[2],p[3]);
+endmodule
 ```
 
-BUG1: output for testcase sel=5'b01100 is not defined 
-
-BUG2: two different inputs are selected as output for same sel=5'b01101
-
-BUG3: output for testcase sel=5'b11110 is not defined
+BUG1: The product of a[1]&b[0] is assigned to p[0], it should be modified to p[0]=a[0]&b[0]
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.

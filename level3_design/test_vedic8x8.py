@@ -176,5 +176,5 @@ async def test_basic_vedic2x2(dut):
     
     dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.A.A.p.value)}')
     assert dut.A.A.p.value == A*B , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
-    A=dut.a.value, B=dut.b.value, Q=A*B,P=int(dut.A.A.p.value))
+    A=dut.A.A.a.value, B=dut.A.A.b.value, Q=A*B,P=int(dut.A.A.p.value))
 
