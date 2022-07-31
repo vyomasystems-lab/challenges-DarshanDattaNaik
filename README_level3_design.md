@@ -299,7 +299,7 @@ Failed test indicates presence of bug in Vedic2x2_D module
 
 # Test Scenario 10
 
-Test for Vedic2x2_basic module present in Vedic4x4_A module
+Test for Vedic2x2_basic module 
 
 ```
     A = 2
