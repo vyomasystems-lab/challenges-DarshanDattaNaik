@@ -347,7 +347,7 @@ BUG1: The product of a[1]&b[0] is assigned to p[0], it should be modified to p[0
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.
-![fixed design output]()
+![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/level3_design/Screenshot%20(134).png)
 
 The updated design is checked in as vedic8x8_fix.v
 
