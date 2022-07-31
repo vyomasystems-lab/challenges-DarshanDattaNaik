@@ -80,5 +80,19 @@ async def test_multiplier4(dut):
     assert dut.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
     A=dut.a.value, B=dut.b.value, Q=c,P=dut.q.value)
 
+# TEST FOR ALL VEDIC4x4 MODULES
 
-
+@cocotb.test()
+async def test_multiplier1.1(dut):
+    """Test for a[1:0]*b[1:0] """
+    
+    A = 0b00000011
+    B = 0b00000011
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
+    await Timer(2, units='ns')
+    
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.m.value)}')
+    assert dut.A.m.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=dut..value)
