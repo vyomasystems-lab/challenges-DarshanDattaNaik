@@ -178,3 +178,17 @@ async def test_basic_vedic2x2(dut):
     assert dut.A.A.p.value == A*B , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
     A=dut.A.A.a.value, B=dut.A.A.b.value, Q=A*B,P=int(dut.A.A.p.value))
 
+@cocotb.test()
+async def test_multiplier_final(dut):
+    """Test for multiplication"""
+    for i in range(255):
+       A = i
+       for j in range(255):
+          B = j
+          dut.a.value = A
+          dut.b.value = B
+          await Timer(2, units='ns')
+    
+          dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.p.value)}')
+          assert dut.p.value == A*B, "Randomised test failed with: a={A} and b={B} and product p!={P} DUT={Q}".format(
+          A=A, B=B, P=A*B,Q=int(dut.p.value))      

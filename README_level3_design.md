@@ -46,7 +46,7 @@ The test fails indicating bug in the design
 
 # Test Scenario 2
 
-Test for Vedic4x4_A module present DUT
+Test for Vedic4x4_A module present in DUT
 
 ```
  #Test for Vedic_4x4_A module
@@ -76,7 +76,7 @@ Failed test indicates presence of bug in Vedic4x4_A module
 
 # Test Scenario 3
 
-Test for Vedic4x4_B module present DUT
+Test for Vedic4x4_B module present in DUT
 
 ```
 #Test for Vedic_4x4_B module
@@ -107,7 +107,7 @@ Failed test indicates presence of bug in Vedic4x4_B module
 
 # Test Scenario 4
 
-Test for Vedic4x4_C module present DUT
+Test for Vedic4x4_C module present in DUT
 
 ```
  #Test for Vedic_4x4_C module
@@ -138,7 +138,7 @@ Failed test indicates presence of bug in Vedic4x4_C module
 
 # Test Scenario 5
 
-Test for Vedic4x4_D module present DUT
+Test for Vedic4x4_D module present in DUT
 
 ```
   #Test for Vedic_4x4_D module
@@ -166,8 +166,42 @@ The following error is seen:
 
 Failed test indicates presence of bug in Vedic4x4_D module
 
-All four vedic4x4 modules present in vedic8x8 failed the tests indicating bugs in lower level modules inside vedic4x4.
+All four vedic4x4 modules present in vedic8x8 failed the tests indicating bugs in lower level modules of vedic4x4.
 
+# Test Scenario 6
+
+Test for Vedic2x2_A module present in Vedic4x4_A module
+
+```
+#Test for Vedic_2x2_A module
+    """Test for a[1:0]*b[1:0] """
+    
+    A = 0xc9
+    B = 0xc9
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
+    await Timer(2, units='ns')
+    
+    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.m.value)}')
+    assert dut.A.m.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.A.m.value))
+
+
+```
+
+The following error is seen:
+
+```
+assert dut.A.m.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=11001001 and b=11001001 and  DUT=0 not equal to expected output 1
+```
+
+- Test Inputs: 'a=11001001' 'b=11001001'
+- Expected Output: m=1
+- Observed Output in the DUT: DUT=0
+
+Failed test indicates presence of bug in Vedic2x2_A module
 
 # Test Scenario 7
 

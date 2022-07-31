@@ -104,7 +104,7 @@ module vedic2x2(a,b,p);
 input [1:0] a,b;
 output [3:0] p;
 wire [3:0] w;
-assign p[0]= a[1]&b[0] ; //   a[0]&b[0];
+assign p[0]=a[1]&b[0] ;    //  a[1]&b[0] ; a[0]&b[0];
 assign w[0]=a[1]&b[0];
 assign w[1]=a[0]&b[1];
 assign w[2]=a[1]&b[1];
