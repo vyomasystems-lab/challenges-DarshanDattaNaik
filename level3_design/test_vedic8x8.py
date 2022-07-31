@@ -47,7 +47,7 @@ async def test_multiplier2(dut):
     await Timer(2, units='ns')
     
     dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.n.value)}')
-    assert dut.n.value == c , "Randomised test failed with: a={A} and b={B} and  m={P} not equal to expected value n={Q}".format(
+    assert dut.n.value == c , "Randomised test failed with: a={A} and b={B} and  n={P} not equal to expected value n={Q}".format(
     A=dut.a.value, B=dut.b.value, Q=c,P=dut.n.value)
 
 @cocotb.test()
