@@ -12,7 +12,7 @@ def dtb(val):
 @cocotb.test()
 async def test_multiplier(dut):
     """Test for multiplication"""
-    for i in range(10):
+    for i in range(255):
        A = random.randint(0,255)
        B = random.randint(0,255)
        dut.a.value = A
@@ -168,14 +168,13 @@ async def test_Vedic_2x2_D(dut):
 async def test_basic_vedic2x2(dut):
     """Test for a[1:0]*b[1:0] """
     
-    A = 0xf1
-    B = 0xab
-    dut.a.value = A
-    dut.b.value = B
-    c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
+    A = 2
+    B = 3
+    dut.A.A.a.value = A
+    dut.A.A.b.value = B
     await Timer(2, units='ns')
     
-    dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.A.A.p.value)}')
-    assert dut.A.A.p.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
-    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.A.A.p.value))
+    dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.A.A.p.value)}')
+    assert dut.A.A.p.value == A*B , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=A*B,P=int(dut.A.A.p.value))
 

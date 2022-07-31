@@ -76,28 +76,213 @@ Failed test indicates presence of bug in Vedic4x4_A module
 
 # Test Scenario 3
 
-The following values are assigned to the input port 
+Test for Vedic4x4_B module present DUT
 
 ```
-    s = 30
-    i= 0b11
-    dut.sel.value = s
-    dut.inp30.value = i
-    await Timer(2, units='ns')
+#Test for Vedic_4x4_B module
+    """Test for a[7:4]*b[3:0} """
+    
+    A = 0xaa
+    B = 0xbb
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(A)[2:6])*btd(dtb(B)[-4:])
+    assert dut.n.value == c , "Randomised test failed with: a={A} and b={B} and  n={P} not equal to expected value n={Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.n.value))
+
 ```
 
 The following error is seen:
 
 ```
-assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
-                     AssertionError: Randomised test failed with: inp30=11, sel=11110 with obtained output=00 not equal expected output=11
+assert dut.n.value == c , "Randomised test failed with: a={A} and b={B} and  n={P} not equal to expected value n={Q}".format(
+                     AssertionError: Randomised test failed with: a=10101010 and b=10111011 and  n=115 not equal to expected value n=110
 ```
 
-- Test Inputs: 'sel=11110'  'inp30=11'  
-- Expected Output: out=11
-- Observed Output in the DUT dut.out=00
+- Test Inputs: 'a=10101010' 'b=10111011'
+- Expected Output: n=110
+- Observed Output in the DUT: DUT=115
 
-'Zero' is obtained as output instead of 'inp30' as output indicating bug in the design
+Failed test indicates presence of bug in Vedic4x4_B module
+
+# Test Scenario 4
+
+Test for Vedic4x4_C module present DUT
+
+```
+ #Test for Vedic_4x4_C module
+    """Test for a[3:0]*b[7:4] """
+    
+    A = 0x99
+    B = 0x99
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[2:6])*btd(dtb(A)[-4:])
+    assert dut.o.value == c , "Randomised test failed with: a={A} and b={B} and  o={P} not equal to expected value o={Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.o.value))
+
+```
+
+The following error is seen:
+
+```
+assert dut.o.value == c , "Randomised test failed with: a={A} and b={B} and  o={P} not equal to expected value o={Q}".format(
+                     AssertionError: Randomised test failed with: a=10011001 and b=10011001 and  o=84 not equal to expected value o=81
+```
+
+- Test Inputs: 'a=10011001' 'b=10011001'
+- Expected Output: o=81
+- Observed Output in the DUT: DUT=84
+
+Failed test indicates presence of bug in Vedic4x4_C module
+
+# Test Scenario 5
+
+Test for Vedic4x4_D module present DUT
+
+```
+  #Test for Vedic_4x4_D module
+    """Test for a[7:4]*b[7:4] """
+    
+    A = 0xaf
+    B = 0xcf
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[2:6])*btd(dtb(A)[2:6])
+    assert dut.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.q.value))
+```
+
+The following error is seen:
+
+```
+ assert dut.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=10101111 and b=11001111 and  DUT=140 not equal to expected output 120
+```
+
+- Test Inputs: 'a=10101111' 'b=11001111'
+- Expected Output: q=120
+- Observed Output in the DUT: DUT=140
+
+Failed test indicates presence of bug in Vedic4x4_D module
+
+All four vedic4x4 modules present in vedic8x8 failed the tests indicating bugs in lower level modules inside vedic4x4.
+
+
+# Test Scenario 7
+
+Test for Vedic2x2_B module present in Vedic4x4_A module
+
+```
+ #Test for Vedic_2x2_B module
+    """Test for a[3:2]*b[1:0] """
+    
+    A = 0xa5
+    B = 0xd3
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(A)[-4:-2])*btd(dtb(B)[-2:])
+    assert dut.A.n.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.A.n.value))
+
+```
+
+The following error is seen:
+
+```
+ assert dut.A.n.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=10100101 and b=11010011 and  DUT=2 not equal to expected output 3
+```
+
+- Test Inputs: 'a=10100101' 'b=11010011'
+- Expected Output: n=3
+- Observed Output in the DUT: DUT=2
+
+Failed test indicates presence of bug in Vedic2x2_B module
+
+
+# Test Scenario 8
+
+Test for Vedic2x2_C module present in Vedic4x4_A module
+
+```
+ #Test for Vedic_2x2_C module
+    """Test for a[1:0]*b[3:2] """
+    
+    A = 0xc1
+    B = 0xac
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-2:])
+    assert dut.A.o.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.A.o.value))
+
+```
+
+The following error is seen:
+
+```
+assert dut.A.o.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=11000001 and b=10101100 and  DUT=2 not equal to expected output 3
+```
+
+- Test Inputs: 'a=11000001' 'b=10101100'
+- Expected Output: o=3
+- Observed Output in the DUT: DUT=2
+
+Failed test indicates presence of bug in Vedic2x2_C module
+
+# Test Scenario 9
+
+Test for Vedic2x2_D module present in Vedic4x4_A module
+
+```
+ #Test for Vedic_2x2_D module
+    """Test for a[3:2]*b[3:2] """
+    
+    A = 0xaa
+    B = 0xbf
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-4:-2])
+    assert dut.A.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.A.q.value))
+
+```
+
+The following error is seen:
+
+```
+ assert dut.A.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=10101010 and b=10111111 and  DUT=7 not equal to expected output 6
+```
+
+- Test Inputs: 'a=10101010' 'b=10111111'
+- Expected Output: q=6
+- Observed Output in the DUT: DUT=7
+
+Failed test indicates presence of bug in Vedic2x2_D module
+
+# Test Scenario 9
+
+Test for Vedic2x2_basic module present in Vedic4x4_A module
+
+```
+ 
+```
+
+The following error is seen:
+
+```
+ assert dut.A.q.value == c , "Randomised test failed with: a={A} and b={B} and  DUT={P} not equal to expected output {Q}".format(
+                     AssertionError: Randomised test failed with: a=10101010 and b=10111111 and  DUT=7 not equal to expected output 6
+```
+
+- Test Inputs: 'a=10101010' 'b=10111111'
+- Expected Output: q=6
+- Observed Output in the DUT: DUT=7
+
+Failed test indicates presence of bug in Vedic2x2_D module
 
 # Design Bug
 
