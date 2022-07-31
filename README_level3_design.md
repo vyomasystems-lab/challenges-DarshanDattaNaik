@@ -4,57 +4,75 @@ The verification environment is setup using [Vyoma's UpTickPro](https://vyomasys
 ![Gitpod Id verification](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/initial%20tool.png)
 
 ## Verification Environment
-The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given mux design. The environment contains test cases which exposes the bugs in the design.The test drives inputs to the Design Under Test (vedic8x8 module here) which takes in 8-bit inputs 'a' and 'b' and gives 16-bit output 'p'.The test cases are developed to verify the product 
+The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given mux design. The environment contains test cases which exposes the bugs in the design.The test drives inputs to the Design Under Test (vedic8x8 module here) which takes in 8-bit inputs 'a' and 'b' and gives 16-bit output 'p'.The test cases are developed to verify the product.Test cases are developed to verify smaller modules present in the DUT to identify the exact location of the bug in the design.
 
+The following required libraries are imported in the environment
+```
+import cocotb
+from cocotb.triggers import Timer
+import random
+```
+
+The required binary_to_decimal and decimal_to_binary functions are defined as follows
+```
+def btd(val):
+    return int(val,2)
+def dtb(val):
+    return bin(val)
+```
 # Test Scenario 1
 
-The following values are assigned to the input port 
+The following values are assigned to 'a' and 'b' 
 
 ```
-    s = 0b01100
-    i = 0b10
-    dut.sel.value = s
-    dut.inp12.value = i
+       A = random.randint(0,255)
+       B = random.randint(0,255)
+       dut.a.value = A
+       dut.b.value = B
 ```
 
 The following error is seen:
 
 ```
-                         assert dut.out.value == i, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
-                     AssertionError: Randomised test failed with: inp12=10, sel=01100 with obtained output=00 not equal expected output=10
+ assert dut.p.value == A*B, "Randomised test failed with: a={A} and b={B} and product p!={P} DUT={Q}".format(
+                     AssertionError: Randomised test failed with: a=67 and b=132 and product p!=8844 DUT=8588
 ```
 
-- Test Inputs: 'sel=01100'  'inp12=10'  
-- Expected Output: out=10
-- Observed Output in the DUT dut.out=00
+- Test Inputs:  'a=67' 'b=132'
+- Expected Output: p=8844
+- Observed Output in the DUT: DUT=8588
 
-'Zero' is obtained as output instead of 'inp12' as output indicating bug in the design
+The test fails indicating bug in the design
 
 # Test Scenario 2
 
-The values are assigned to the input ports using
+Test for Vedic4x4_A module present DUT
 
 ```
-      s = 0b01101
-      i12 = 0b10
-      i13 = 0b11
-      dut.sel.value = s
-      dut.inp12.value = i12
-      dut.inp13.value = i13
+ #Test for Vedic_4x4_A module
+    """Test for a[3:0]*b[3:0} """
+    
+    A = 0xaa
+    B = 0xff
+    dut.a.value = A
+    dut.b.value = B
+    c=btd(dtb(A)[-4:])*btd(dtb(B)[-4:])
+    assert dut.m.value == c , "Randomised test failed with: a={A} and b={B} and  m={P} not equal to expected value m={Q}".format(
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.m.value))
 ```
 
 The following error is seen:
 
 ```
- assert dut.out.value == i13, "Randomised test failed with: inp{A}={B}, sel={S} with obtained output={M} not equal expected output={E}".format(
-                     AssertionError: Randomised test failed with: inp13=11, sel=01101 with obtained output=10 not equal expected output=11
+assert dut.m.value == c , "Randomised test failed with: a={A} and b={B} and  m={P} not equal to expected value m={Q}".format(
+                     AssertionError: Randomised test failed with: a=10101010 and b=11111111 and  m=175 not equal to expected value m=150
 ```
 
-- Test Inputs: 'sel=01101'  'inp12=10'  'inp13=11'
-- Expected Output: out=11
-- Observed Output in the DUT dut.out=10
+- Test Inputs: 'a=10101010' 'b=11111111'
+- Expected Output: m=150
+- Observed Output in the DUT: DUT=175
 
-'inp12' is obtained as output instead of obtaining 'inp13' as output indicating a bug in the design
+Failed test indicates presence of bug in Vedic4x4_A module
 
 # Test Scenario 3
 
