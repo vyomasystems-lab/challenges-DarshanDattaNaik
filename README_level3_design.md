@@ -353,10 +353,10 @@ The updated design is checked in as vedic8x8_fix.v
 
 # Verification strategy
 The verification startegy used here is 
--1. checking the outputs of all vedic4x4 modules present in the vedic8x8 one by one.
--2. based on the errors obtained in step(1) all the individual vedic2x2 modules within one vedic4x4 module are checked
--3. based on the errors obtained in step(2) the functionality vedic2x2 module is verfied
--4. The vedic2x2 module gives error indicating presence of bug in it.
+- 1. checking the outputs of all vedic4x4 modules present in the vedic8x8 one by one.
+- 2. based on the errors obtained in step(1) all the individual vedic2x2 modules within one vedic4x4 module are checked
+- 3. based on the errors obtained in step(2) the functionality vedic2x2 module is verfied
+- 4. The vedic2x2 module gives error indicating presence of bug in it.
 
 
 # Is the verification complete?
