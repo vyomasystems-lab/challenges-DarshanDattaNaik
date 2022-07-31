@@ -181,9 +181,9 @@ async def test_basic_vedic2x2(dut):
 @cocotb.test()
 async def test_multiplier_final(dut):
     """Test for multiplication"""
-    for i in range(255):
+    for i in range(256):
        A = i
-       for j in range(255):
+       for j in range(256):
           B = j
           dut.a.value = A
           dut.b.value = B
