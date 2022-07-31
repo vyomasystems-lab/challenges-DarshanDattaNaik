@@ -32,7 +32,7 @@ async def test_multiplier1(dut):
     #Test for Vedic_4x4_A module
     """Test for a[3:0]*b[3:0} """
     
-    A = 0xff
+    A = 0xaa
     B = 0xff
     dut.a.value = A
     dut.b.value = B
@@ -48,8 +48,8 @@ async def test_multiplier2(dut):
     #Test for Vedic_4x4_B module
     """Test for a[7:4]*b[3:0} """
     
-    A = 0xab
-    B = 0xab
+    A = 0xaa
+    B = 0xbb
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(A)[2:6])*btd(dtb(B)[-4:])
@@ -64,8 +64,8 @@ async def test_multiplier3(dut):
     #Test for Vedic_4x4_C module
     """Test for a[3:0]*b[7:4] """
     
-    A = 0x0f
-    B = 0xf0
+    A = 0x99
+    B = 0x99
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[2:6])*btd(dtb(A)[-4:])
@@ -73,15 +73,15 @@ async def test_multiplier3(dut):
     
     dut.log.info(f'a={A} b={B} model={c} DUT={int(dut.o.value)}')
     assert dut.o.value == c , "Randomised test failed with: a={A} and b={B} and  o={P} not equal to expected value o={Q}".format(
-    A=dut.a.value, B=dut.b.value, Q=c,P=dut.o.value)
+    A=dut.a.value, B=dut.b.value, Q=c,P=int(dut.o.value))
 
 @cocotb.test()
 async def test_multiplier4(dut):
     #Test for Vedic_4x4_D module
     """Test for a[7:4]*b[7:4] """
     
-    A = 0xf0
-    B = 0xf0
+    A = 0xaf
+    B = 0xcf
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[2:6])*btd(dtb(A)[2:6])
@@ -101,8 +101,8 @@ async def test_multiplier1_1(dut):
     #Test for Vedic_2x2_A module
     """Test for a[1:0]*b[1:0] """
     
-    A = 0b00000011
-    B = 0b00000011
+    A = 0xc9
+    B = 0xc9
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
@@ -118,8 +118,8 @@ async def test_multiplier1_2(dut):
     #Test for Vedic_2x2_B module
     """Test for a[3:2]*b[1:0] """
     
-    A = 0b00001100
-    B = 0b00000011
+    A = 0xa5
+    B = 0xd3
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(A)[-4:-2])*btd(dtb(B)[-2:])
@@ -134,8 +134,8 @@ async def test_multiplier1_3(dut):
     #Test for Vedic_2x2_C module
     """Test for a[1:0]*b[3:2] """
     
-    A = 0b00000011
-    B = 0b00001100
+    A = 0xc1
+    B = 0xac
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-2:])
@@ -150,8 +150,8 @@ async def test_multiplier1_4(dut):
     #Test for Vedic_2x2_D module
     """Test for a[3:2]*b[3:2] """
     
-    A = 0b00001100
-    B = 0b00001100
+    A = 0xaa
+    B = 0xbf
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[-4:-2])*btd(dtb(A)[-4:-2])
@@ -168,8 +168,8 @@ async def test_multiplier1_4(dut):
 async def test_multiplier1_1_1(dut):
     """Test for a[1:0]*b[1:0] """
     
-    A = 0b00000011
-    B = 0b00000011
+    A = 0xf1
+    B = 0xab
     dut.a.value = A
     dut.b.value = B
     c=btd(dtb(B)[-2:])*btd(dtb(A)[-2:])
