@@ -27,5 +27,5 @@ async def test_multiplier1(dut):
     await Timer(2, units='ns')
     
     dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.m.value)}')
-    assert dut.A.m.value == A*B  , "Randomised test failed with: a={A} and b={B} and product p!={P}".format(
+    assert dut.A.m.value == 0  , "Randomised test failed with: a={A} and b={B} and product p!={P}".format(
     A=dut.a.value, B=dut.b.value, P=A*B)      
