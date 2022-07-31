@@ -141,7 +141,7 @@ ii) verifying the output for all different possible combinations of 'sel'
 
 # Is the verification complete?
 Yes, the verification is complete and the design is fixed
-Note: When sel=5'b11111 the ouput would be set to default zero (This value of sel can be used to reset the mux output)
+-Note: When sel=5'b11111 the ouput would be set to default zero (This value of sel can be used to reset the mux output)
 
 
 
