@@ -347,18 +347,19 @@ BUG1: The product of a[1]&b[0] is assigned to p[0], it should be modified to p[0
 Updating the design and re-running the test makes the test pass.
 ![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/level1_design1/Design1_passed_test.png)
 
-The updated design is checked in as mux_fix.v
+The updated design is checked in as vedic8x8_fix.v
 
 # Verification strategy
-The verification startegy used here is based on
-i) only one input should be selected for one unique combination of 'sel'
-ii) verifying the output for all different possible combinations of 'sel'
+The verification startegy used here is 
+-1. checking the outputs of all vedic4x4 modules present in the vedic8x8 one by one.
+-2. based on the errors obtained in step(1) all the individual vedic2x2 modules within one vedic4x4 module are checked
+-3. based on the errors obtained in step(2) the functionality vedic2x2 module is verfied
+-4. The vedic2x2 module gives error indicating presence of bug in it.
 
 
 # Is the verification complete?
 Yes, the verification is complete and the design is fixed
-Note: When sel=5'b11111 the ouput would be set to default zero (This value of sel can be used to reset the mux output)
-
+The outputs are verfied for all possible inputs of 'a' and 'b'
 
 
 
