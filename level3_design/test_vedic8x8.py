@@ -20,12 +20,12 @@ async def test_multiplier(dut):
 async def test_multiplier1(dut):
     """Test for multiplication"""
     
-    A = 15
-    B = 15
+    A = 0x04
+    B = 0x04
     dut.a.value = A
     dut.b.value = B
     await Timer(2, units='ns')
     
-    dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.p.value)}')
-    assert dut.p.value == A*B, "Randomised test failed with: a={A} and b={B} and product p!={P}".format(
+    dut.log.info(f'a={A} b={B} model={A*B} DUT={int(dut.m.value)}')
+    assert dut.A.m.value == A*B  , "Randomised test failed with: a={A} and b={B} and product p!={P}".format(
     A=dut.a.value, B=dut.b.value, P=A*B)      
