@@ -1,10 +1,10 @@
 # 8x8 Vedic Multiplier Design Verification
 The verification environment is setup using [Vyoma's UpTickPro](https://vyomasystems.com/) provided for the hackathon.
 
-![Gitpod Id verification](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/initial%20tool.png)
+![Gitpod Id verification](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/level1_design2/id%20verifcation.png)
 
 ## Verification Environment
-The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given mux design. The environment contains test cases which exposes the bugs in the design.The test drives inputs to the Design Under Test (vedic8x8 module here) which takes in 8-bit inputs 'a' and 'b' and gives 16-bit output 'p'.The test cases are developed to verify the product.Test cases are developed to verify smaller modules present in the DUT to identify the exact location of the bug in the design.
+The [CoCoTb](https://www.cocotb.org/) based Python test is developed for the given Vedic8x8 multiplier design. The environment contains test cases which exposes the bugs in the design.The test drives inputs to the Design Under Test (vedic8x8 module here) which takes in 8-bit inputs 'a' and 'b' and gives 16-bit output 'p'.The test cases are developed to verify the product.Test cases are developed to verify smaller modules present in the DUT to identify the exact location of the bug in the design.
 
 The following required libraries are imported in the environment
 ```
@@ -297,6 +297,8 @@ The following error is seen:
 
 Failed test indicates presence of bug in Vedic2x2_D module
 
+All four vedic2x2 modules fail the tests indicating the main vedic2x2 module has bugs.
+
 # Test Scenario 10
 
 Test for Vedic2x2_basic module 
@@ -321,7 +323,7 @@ The following error is seen:
 - Expected Output: p=6
 - Observed Output in the DUT: DUT=7
 
-Failed test indicates presence of bug in lower Vedic2x2 module 
+Failed test confirms presence of bug in lower Vedic2x2 module 
 
 # Design Bug
 
@@ -345,7 +347,7 @@ BUG1: The product of a[1]&b[0] is assigned to p[0], it should be modified to p[0
 
 # Design Fix
 Updating the design and re-running the test makes the test pass.
-![fixed design output](https://github.com/vyomasystems-lab/challenges-DarshanDattaNaik/blob/master/level1_design1/Design1_passed_test.png)
+![fixed design output]()
 
 The updated design is checked in as vedic8x8_fix.v
 
